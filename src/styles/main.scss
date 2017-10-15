@@ -39,15 +39,20 @@ a { text-decoration: none; border-bottom: 2px solid $blue; color: $blue; }
 .f-small { font-size: 1rem; }
 .f-super { vertical-align: super; }
 .f-justify { text-align: justify; }
+.f-fade { color: lighten($black, 70%); }
+.f-tc { text-align: center; }
+
 
 .f-out:after {
   content: '\21AC';
   margin-left: 8px;
 }
 
-.f-tc { text-align: center; }
 .u-ubg { border-bottom: solid $green 4px; }
 .u-dib { display: inline-block; }
+.u-db  { display: block; }
+.u-centerMargin { margin: 0 auto; }
+.u-imgResp { display: block; max-width: 100%; }
 
 .bg {
   background-image: url('/img/capitol.png');
@@ -156,4 +161,12 @@ a { text-decoration: none; border-bottom: 2px solid $blue; color: $blue; }
 
 .footer {
     background-color: transparent;
+}
+
+.vids {
+  margin-top: 32px;
+}
+
+.vid {
+    margin-top: 16px;
 }
