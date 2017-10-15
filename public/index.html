@@ -8,21 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- facebook open graph tags-->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nashville.civichack.us/">
-    <meta property="og:title" content="Nashville Day of Civic Hacking 2017">
-    <meta property="og:description" content="Join us for a day of tech volunteerism to benefit the residents of Nashville.">
-    <meta property="og:image" content="https://nashville.civichack.us/img/bat-banner.jpg">
+    <meta property="og:url" content="https://hello.civichack.us">
+    <meta property="og:title" content="Hello.civichack.us">
     <!-- twitter card tags additive with the og: tags-->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:domain" value="nashville.civichack.us">
-    <meta name="twitter:title" value="Nashville Day of Civic Hacking 2017">
-    <meta name="twitter:description" value="Join us for a day of tech volunteerism to benefit the residents of Nashville.">
-    <meta name="twitter:image" content="https://nashville.civichack.us/img/bat-banner.jpg">
-    <meta name="twitter:url" value="https://nashville.civichack.us/">
-    <meta name="twitter:label1" value="When">
-    <meta name="twitter:data1" value="September 23, 8am CST">
-    <meta name="twitter:label2" value="Where">
-    <meta name="twitter:data2" value="500 Interstate Blvd S, Nashville, TN">
+    <meta name="twitter:domain" value="hello.civichack.us">
+    <meta name="twitter:title" value="Hello.civichack.us">
+    <meta name="twitter:url" value="https://hello.civichack.us/">
     <!--link(rel="apple-touch-icon" href="apple-touch-icon.png")-->
     <!-- Uncomment the following as needed-->
     <link rel="stylesheet" href="/css/normalize.css">
@@ -37,10 +29,14 @@
     <![endif]
     
     -->
+    <script src="https://unpkg.com/vue@2.5.2/dist/vue.js"></script>
     <header>
       <div class="wrap u-centerMargin" style="max-width: 600px">
         <h1 class="f-tc">Hello.<span class="f-fade">civichack.us</span></h1>
-        <p class="f-tc">Let's collect some institutional knowledge.</p>
+        <p class="f-tc">
+          Let's collect some institutional knowledge.
+          
+        </p>
         <p class="f-tc">
           Take a look at 
           <a href="https://docs.google.com/document/d/1THGqCtxPRxojFgQqFKnUimk3HBcRFzVXs2w3RwEJy9I/edit#heading=h.5hfznm5o3agj" target="_blank">the topic idea document</a>
@@ -48,16 +44,37 @@
           
         </p>
         <p class="f-tc">Email me at <a href="mailto:nick@codefornashville.org">nick@codefornashville.org</a>
-          with any questions.
+          with any questions or comments.
           
         </p>
       </div>
     </header>
     <section class="vids">
-      <div class="vid"><iframe class="u-imgResp u-centerMargin" width="560" height="315" src="https://www.youtube.com/embed/0AHVdETLJlA?rel=0" frameborder="0" allowfullscreen></iframe></div>
-      <div class="vid"><iframe class="u-imgResp u-centerMargin" width="560" height="315" src="https://www.youtube.com/embed/1Yj-6tIeQXA?rel=0" frameborder="0" allowfullscreen></iframe></div>
+      <div id="vids-mount">
+        <div class="vid" v-for="video in videos">
+          <iframe class="vidFrame" :src="video.src" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: "#vids-mount",
+          data: {
+            videos: [
+                {
+                    "src": "https://www.youtube.com/embed/0AHVdETLJlA?rel=0",
+                    "interviewer": "",
+                    "interviewee": ""
+                },
+                {
+                    "src": "https://www.youtube.com/embed/1Yj-6tIeQXA?rel=0",
+                    "interviewer": "",
+                    "interviewee": ""
+                }
+            ]
+          }
+        })
+      </script>
     </section>
-    <!--script(src="js/main.js")-->
     <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID.-->
     <script> window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date; ga('create','UA-XXXXX-Y','auto');ga('send','pageview')</script>
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
