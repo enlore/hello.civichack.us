@@ -1,0 +1,159 @@
+* { box-sizing: border-box; }
+
+$black: #252525;
+$green: #00FF33;
+$blue: #0000FF;
+$orange: #FF6600;
+$pink: #FF00FF;
+$white: #fff;
+
+h1, h2, h3 { font-family: 'Zilla Slab', serif; }
+
+.f-h { font-family: 'Zilla Slab', serif; }
+
+p, a, li, span {
+  font-family: 'Open Sans', serif;
+}
+
+p {
+    line-height: 1.4;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: $black;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+
+h3 a { font-family: 'Zilla Slab', serif; }
+
+a { text-decoration: none; border-bottom: 2px solid $blue; color: $blue; }
+
+.f-tagline { font-size: 1.50rem; line-height: 1.4; }
+
+.f-small { font-size: 1rem; }
+.f-super { vertical-align: super; }
+.f-justify { text-align: justify; }
+
+.f-out:after {
+  content: '\21AC';
+  margin-left: 8px;
+}
+
+.f-tc { text-align: center; }
+.u-ubg { border-bottom: solid $green 4px; }
+.u-dib { display: inline-block; }
+
+.bg {
+  background-image: url('/img/capitol.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.page {
+  @media screen and (min-width: 1008px) {
+    max-width: 60%;
+  }
+}
+
+.hero, .section {
+    background-color: transparent;
+}
+
+.btn {
+  display: block;
+  border: none;
+  padding: 16px 32px;
+  min-width: 216px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  cursor: pointer;
+
+  //gross hack, fixes render artifacts on transitioned shadows
+  backface-visibility: hidden;
+}
+
+.btn--large {
+  padding: (16px * 1.6) 32px;
+  font-size: 1.6rem;
+}
+
+.btn--hoverShadow {
+  transition: box-shadow 160ms linear, top 160ms linear, right 160ms linear, background-color 160ms linear;
+}
+
+.btn--register {
+  box-shadow: -4px 5px 0 1px $blue,
+    2px -3px 0 1px $blue;
+  background-color: $orange;
+  color: $white;
+  position: relative;
+  top: 0;
+  right: 0;
+
+  &:hover {
+      box-shadow: -5.3px 7px 0 1px $blue,
+        3px -4px 0 2px $blue;
+        top: -2px;
+        right: -1px;
+        background-color: lighten($orange, 6%);
+    }
+
+    &:hover:after {
+        color: $blue;
+    }
+}
+
+
+.btn--register:after {
+  content: '\21AC';
+  font-size: 3rem;
+  line-height: 1.6rem;
+  //content: '&#8620;';
+  float: right;
+  transition: color 160ms linear;
+}
+
+
+.btn--contact {
+  box-shadow: -2px 3px 0 1px $pink,
+    1px -1.5px 0 1px $pink;
+  background-color: $blue;
+  color: $white;
+  position: relative;
+  top: 0;
+  right: 0;
+
+  &:hover {
+      box-shadow: -3px 4.5px 0 1px $pink,
+        2px -3.3px 0 1px $pink;
+        top: -1px;
+        right: -0.7px;
+        background-color: lighten($blue, 10%);
+    }
+}
+
+.btn--contact-icon {
+    width: 36px;
+    display: block;
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $white;
+    transition: color 160ms linear;
+}
+
+.btn--contact:hover .btn--contact-icon {
+    color: $pink;
+}
+
+.footer {
+    background-color: transparent;
+}
