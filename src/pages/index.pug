@@ -30,30 +30,77 @@ block body
 
   section.vids
     #vids-mount
-      .vid(v-for="video in videos")
-        iframe.vidFrame( :src="video.src", frameborder="0", allowfullscreen)
+      .control-group.u-centerMargin(style="max-width: 800px;")
+        label Search and filter
+        input.searchInput(type="search", v-model="searchTerm")
+
+      viddy(v-show="filteredVids.length > 0", v-for="video in filteredVids", :key="video.src", :src="video.src", :tags="video.tags", @tagclick="searchTerm = $event")
+
+      p.f-tc(v-show="!filteredVids.length > 0") Hey, no results for #[span.f-highlight {{ this.searchTerm }}]
 
     script.
+      var Vid = {
+        data: function () { return {} },
+
+        props: [
+          'src',
+          'tags'
+        ],
+
+        template:
+          '<div class="vid">'
+        +   '<iframe class="vid-frame" :src="src" frameborder="0"></iframe>'
+        +   '<span class="vid-tag" v-for="tag in tags" @click="$emit(\'tagclick\', tag)"> {{ tag }} </span>'
+        + '</div>'
+      }
+
       new Vue({
         el: "#vids-mount",
+
+        components: {
+          'viddy': Vid
+        },
+
         data: {
+          searchTerm: "",
           videos: [
               {
-                  "src": "https://www.youtube.com/embed/0AHVdETLJlA?rel=0",
-                  "interviewer": "",
-                  "interviewee": ""
+                  src: "https://www.youtube.com/embed/0AHVdETLJlA?rel=0&html5=true",
+                  interviewer: "",
+                  interviewee: "",
+                  tags: ["new leadership", "returning brigade", "leadership"],
+                  notes: "About writing poems about dogs"
               },
               {
-                  "src": "https://www.youtube.com/embed/1Yj-6tIeQXA?rel=0",
-                  "interviewer": "",
-                  "interviewee": ""
+                  src: "https://www.youtube.com/embed/1Yj-6tIeQXA?rel=0",
+                  interviewer: "",
+                  interviewee: "",
+                  tags: ["experienced brigade", "many captains", "events", "leadership"],
+                  notes: ""
               },
               {
-                  "src": "https://www.youtube.com/embed/FkEZvp0cjgc?rel=0",
-                  "interviewer": "",
-                  "interviewee": ""
+                  src: "https://www.youtube.com/embed/FkEZvp0cjgc?rel=0",
+                  interviewer: "",
+                  interviewee: "",
+                  tags: ["design", "theory", "civics"],
+                  notes: "Super useful information from a real handy dandy dude who likes cats"
               },
           ]
+        },
+
+        computed: {
+          filteredVids: function () {
+            return (this.searchTerm === "")
+              ? this.videos
+              : this.searchEngine.search(this.searchTerm)
+          }
+        },
+
+        created: function () {
+          this.searchEngine = new window.Fuse(this.videos, {
+            shouldSort: true,
+            keys: ['tags', 'notes']
+          })
         }
       })
 
