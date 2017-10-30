@@ -31,7 +31,7 @@ block body
   section.vids
     #vids-mount
       .control-group.u-centerMargin(style="max-width: 800px;")
-        label Search and filter
+        label.f-fade.u-mb4 Search and filter
         input.searchInput(type="search", v-model="searchTerm")
 
       viddy(v-show="filteredVids.length > 0", v-for="video in filteredVids", :key="video.src", :src="video.src", :tags="video.tags", @tagclick="searchTerm = $event")
@@ -89,6 +89,18 @@ block body
         },
 
         computed: {
+          allTags: function () {
+            return this.videos.reduce(function (acc, vid) {
+              return acc.concat(vid.tags)
+            }, [])
+          },
+
+          randomTag: function () {
+            // confident that allTags will always have a length prop
+            var idx = Math.floor(Math.random() * this.allTags.length)
+            return tags[idx]
+          },
+
           filteredVids: function () {
             return (this.searchTerm === "")
               ? this.videos
