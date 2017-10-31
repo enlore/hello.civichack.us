@@ -135,6 +135,7 @@ header {
   margin: 8px 3px 0 3px;
   color: $white;
   cursor: pointer;
+  border-radius: 2px;
 
   &:first-child { margin-left: 0; }
   &:last-child { margin-right: 0; }
