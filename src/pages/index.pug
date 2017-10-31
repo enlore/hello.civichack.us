@@ -34,9 +34,19 @@ block body
         label.f-fade.u-mb4 Search and filter
         input.searchInput(type="search", v-model="searchTerm")
 
-      viddy(v-show="filteredVids.length > 0", v-for="video in filteredVids", :key="video.src", :src="video.src", :tags="video.tags", @tagclick="searchTerm = $event")
+      viddy(
+        v-show="filteredVids.length > 0",
+        v-for="video in filteredVids",
+        :key="video.src",
+        :src="video.src",
+        :notes="video.notes",
+        :tags="video.tags",
+        @tagclick="searchTerm = $event"
+      )
 
-      p.f-tc(v-show="!filteredVids.length > 0") Hey, no results for #[span.f-highlight {{ this.searchTerm }}]
+      p.f-tc(v-show="!filteredVids.length > 0").
+        Hey, no results for #[span.msg.msg-noResults {{ this.searchTerm }}].
+        Try #[span.msg.msg-tagLink(@click="searchTerm = randomTag") {{ randomTag }} ]
 
     script.
       var Vid = {
@@ -44,13 +54,18 @@ block body
 
         props: [
           'src',
-          'tags'
+          'tags',
+          'notes'
         ],
 
         template:
           '<div class="vid">'
         +   '<iframe class="vid-frame" :src="src" frameborder="0"></iframe>'
-        +   '<span class="vid-tag" v-for="tag in tags" @click="$emit(\'tagclick\', tag)"> {{ tag }} </span>'
+        +   '<h4 v-if="notes" class="vid-notesLabel"> Notes </h4>'
+        +   '<p v-if="notes" class="vid-notes" v-html="notes"></p>'
+        +   '<div class="vid-tags">'
+          +   '<span class="vid-tag" v-for="tag in tags" @click="$emit(\'tagclick\', tag)"> {{ tag }} </span>'
+        +   '</div>'
         + '</div>'
       }
 
@@ -68,22 +83,20 @@ block body
                   src: "https://www.youtube.com/embed/0AHVdETLJlA?rel=0&html5=true",
                   interviewer: "",
                   interviewee: "",
-                  tags: ["new leadership", "returning brigade", "leadership"],
-                  notes: "About writing poems about dogs"
+                  tags: ["new leadership", "returning brigade", "leadership"]
               },
               {
                   src: "https://www.youtube.com/embed/1Yj-6tIeQXA?rel=0",
                   interviewer: "",
                   interviewee: "",
-                  tags: ["experienced brigade", "many captains", "events", "leadership"],
-                  notes: ""
+                  tags: ["experienced brigade", "many captains", "events", "leadership"]
               },
               {
                   src: "https://www.youtube.com/embed/FkEZvp0cjgc?rel=0",
                   interviewer: "",
                   interviewee: "",
                   tags: ["design", "theory", "civics"],
-                  notes: "Super useful information from a real handy dandy dude who likes cats"
+                  notes: "Here’s the first essay I wrote for CfA, about what became my current full-time pursuit: http://beyondtransparency.org/chapters/part-5/towards-a-community-data-commons/ here’s a piece i wrote about civics and a counterpoint to ‘gov as platform’ in Civic Quarterly: https://www.civicquarterly.com/article/with-and-of-and-by-and-for/ i recommend Emergent Strategy to anyone interested in organizing: https://www.akpress.org/emergentstrategy.html"
               },
           ]
         },
@@ -97,7 +110,8 @@ block body
 
           randomTag: function () {
             // confident that allTags will always have a length prop
-            var idx = Math.floor(Math.random() * this.allTags.length)
+            var tags = this.allTags
+            var idx = Math.floor(Math.random() * tags.length)
             return tags[idx]
           },
 
@@ -108,11 +122,28 @@ block body
           }
         },
 
+        methods:{
+          wrapUrls: function (video) {
+            if (video.notes) {
+              video.notes = video.notes.replace(
+                // match urls that are entered with protocol intact
+                // mostly for fun, i guess
+                /(https?:\/\/[\w\b\.\/\-\?=]*)/ig,
+                '<a class="vid-href" target="_blank" href="$1">[link]</a>'
+              )
+            }
+
+            return video
+          }
+        },
+
         created: function () {
           this.searchEngine = new window.Fuse(this.videos, {
             shouldSort: true,
             keys: ['tags', 'notes']
           })
+
+          this.videos = this.videos.map(this.wrapUrls)
         }
       })
 

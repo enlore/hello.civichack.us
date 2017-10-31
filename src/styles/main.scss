@@ -1,3 +1,23 @@
+@mixin dp1 { box-shadow: 0 0 2px 0 rgba(0,0,0,0.14), 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20); }
+@mixin dp2 { box-shadow: 0 2px 4px 0 rgba(0,0,0,0.14), 0 3px 4px 0 rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20); }
+@mixin dp3 { box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 3px 4px 0 rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.20); }
+@mixin dp4 { box-shadow: 0 2px 4px 0 rgba(0,0,0,0.14), 0 4px 5px 0 rgba(0,0,0,0.12), 0 1px 10px 0 rgba(0,0,0,0.20); }
+
+
+@mixin card {
+  border-right: 1px solid $lightGrey;
+  border-bottom: 1px solid $lightGrey;
+  background: #FAFAFA;
+  @include dp1;
+  border-radius: 2px;
+  transition: box-shadow 320ms ease;
+
+  &:hover {
+    @include dp3;
+  }
+}
+
+
 * { box-sizing: border-box; }
 
 $black: #252525;
@@ -6,9 +26,12 @@ $blue: #0000FF;
 $orange: #FF6600;
 $pink: #FF00FF;
 $white: #fff;
+$lightGrey: lighten($black, 70%);
+$grey: lighten($black, 50%);
+$darkGrey: lighten($black, 20%);
 
-h1, h2, h3 { font-family: 'Zilla Slab', serif; }
-.f-h       { font-family: 'Zilla Slab', serif; }
+h1, h2, h3, h4 { font-family: 'Zilla Slab', serif; }
+.f-h           { font-family: 'Zilla Slab', serif; }
 
 p, a, li, span, label { font-family: 'Open Sans', serif; }
 p { line-height: 1.4; }
@@ -24,12 +47,14 @@ html, body {
 
 h1 { font-size: 2.2rem; }
 h2 { font-size: 1.75rem; }
-h3 { font-size: 1rem; }
+h3 { font-size: 1.2rem; }
+h4 { font-size: 1rem; }
 
 @media (min-width: 768px) {
   h1 { font-size: 3rem; }
   h2 { font-size: 2rem; }
   h3 { font-size: 1.75rem; }
+  h4 { font-size: 1.35rem; }
 }
 
 h3 a { font-family: 'Zilla Slab', serif; }
@@ -41,9 +66,9 @@ a { text-decoration: none; border-bottom: 2px solid $blue; color: $blue; }
 .f-small { font-size: 1rem; }
 .f-super { vertical-align: super; }
 .f-justify { text-align: justify; }
-.f-fade { color: lighten($black, 70%); }
+.f-fade { color: $darkGrey; }
 .f-tc { text-align: center; }
-.f-highlight { color: $blue; background-color: lighten($black, 70%); padding: 0 4px; }
+.f-highlight { color: $white; background-color: $darkGrey; padding: 0 4px; }
 
 .f-out:after {
   content: '\21AC';
@@ -67,7 +92,9 @@ header {
 }
 
 .searchInput {
-  padding: 4px;
+  padding: 6px 4px;
+  border: none;
+  @include card;
 }
 
 .vids {
@@ -79,6 +106,8 @@ header {
     max-width: 800px;
     margin: 0 auto;
     margin-top: 16px;
+    padding: 16px;
+    @include card;
 }
 
 .vid-frame {
@@ -95,14 +124,37 @@ header {
   }
 }
 
+.vid-tags {
+  margin-top: 4px;
+}
+
 .vid-tag {
   display: inline-block;
   padding: 5px;
-  background-color: lighten($black, 20%);
-  margin: 3px;
+  background-color: $darkGrey;
+  margin: 8px 3px 0 3px;
   color: $white;
   cursor: pointer;
 
   &:first-child { margin-left: 0; }
   &:last-child { margin-right: 0; }
+}
+
+.vid-notesLabel {
+  margin: 0;
+  margin-top: 8px;
+}
+.vid-notes {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.msg {
+  padding: 6px 4px;
+  background-color: $darkGrey;
+  color: $white;
+}
+
+.msg-tagLink {
+  cursor: pointer;
 }
